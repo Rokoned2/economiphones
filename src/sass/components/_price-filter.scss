@@ -1,0 +1,16 @@
+.price-filter {
+  border-radius: 0.5rem;
+  border: 1px solid #000;
+  width: 90%;
+  padding: 1rem;
+  &__list {
+    margin-top: 0.8rem;
+  }
+  &__item {
+    display: inline-block;
+    margin-right: 2rem;
+    & :first-child {
+      margin-right: 0.5rem;
+    }
+  }
+}

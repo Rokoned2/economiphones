@@ -1,0 +1,14 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+  &__group:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+  &__input {
+    padding: 1.5rem 2rem;
+    border-radius: 2px;
+    border: none;
+    width: 100%;
+  }
+}

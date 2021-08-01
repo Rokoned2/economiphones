@@ -1,0 +1,24 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #000;
+
+  &__logo-box {
+    display: flex;
+    align-items: center;
+  }
+  &__logo {
+    width: 16rem;
+  }
+
+  &__link {
+    text-decoration: none;
+    margin-right: 2rem;
+    color: #000;
+  }
+
+  &__right {
+    display: flex;
+  }
+}
