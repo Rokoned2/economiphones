@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
-import api from "../api";
+import users from "../api/users";
 import { BiUpload } from "react-icons/bi";
 
 import logo from "../imgs/economiphones-logo.svg";
@@ -11,8 +11,8 @@ const Navbar = (props) => {
   const user = useSelector((state) => state.user);
 
   const logoutHandler = () => {
-    api
-      .get("/users/logout", {
+    users
+      .get("/logout", {
         withCredentials: true,
         credentials: "include",
       })

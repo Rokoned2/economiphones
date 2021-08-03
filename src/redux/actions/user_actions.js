@@ -1,5 +1,6 @@
 import {
   LOGIN_USER,
+  LOGIN_ADMIN,
   REGISTER_USER,
   AUTH_USER,
   LOGOUT_USER,
@@ -32,6 +33,20 @@ export function loginUser(dataToSubmit) {
 
   return {
     type: LOGIN_USER,
+    payload: request,
+  };
+}
+
+export function loginAdmin(dataToSubmit) {
+  const request = api
+    .post("/users/login-admin", dataToSubmit, {
+      withCredentials: true,
+      credentials: "include",
+    })
+    .then((response) => response.data);
+
+  return {
+    type: LOGIN_ADMIN,
     payload: request,
   };
 }
