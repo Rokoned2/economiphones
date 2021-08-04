@@ -1,19 +1,7 @@
 import React, { useState } from "react";
 
-const brandList = [
-  {
-    _id: 1,
-    name: "Samsumg",
-  },
-  {
-    _id: 2,
-    name: "Huawei",
-  },
-];
-
-const BrandFilter = ({ list }) => {
+const CheckBox = ({ list }) => {
   const [Checked, setChecked] = useState([]);
-  console.log("Checked", Checked);
 
   const handleToggle = (value) => {
     const currentIndex = Checked.indexOf(value);
@@ -33,22 +21,22 @@ const BrandFilter = ({ list }) => {
   const renderCheckboxLists = () =>
     list &&
     list.map((value, index) => (
-      <React.Fragment key={index}>
+      <div key={index} className="price-filter__item">
         <input
           onChange={() => handleToggle(value._id)}
           type="checkbox"
           checked={Checked.indexOf(value._id) === -1 ? false : true}
         />
         <span>{value.name}</span>
-      </React.Fragment>
+      </div>
     ));
 
   return (
-    <div>
-      <h3>Marcas</h3>
-      <div>{renderCheckboxLists()}</div>
+    <div className="checkbox u-center-element-x">
+      <h3 className="heading-terciary">Marcas</h3>
+      <div className="checkbox__list">{renderCheckboxLists()}</div>
     </div>
   );
 };
 
-export default BrandFilter;
+export default CheckBox;

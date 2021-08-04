@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const PriceFilter = ({ list, handleFilters }) => {
-  const [radio, setRadio] = useState("0");
+  const [radio, setRadio] = useState("Todos");
 
   const renderRadioBox = () =>
     list &&

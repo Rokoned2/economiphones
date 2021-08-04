@@ -321,6 +321,26 @@ body {
   width: 100%;
 }
 
+.checkbox {
+  border-radius: 0.5rem;
+  border: 1px solid #000;
+  width: 90%;
+  padding: 1rem;
+}
+
+.checkbox__list {
+  margin-top: 0.8rem;
+}
+
+.checkbox__item {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.checkbox__item :first-child {
+  margin-right: 0.5rem;
+}
+
 .search {
   border: 1px solid #000;
   border-radius: 0.5rem;

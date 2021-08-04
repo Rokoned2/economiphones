@@ -42,9 +42,11 @@ const Navbar = (props) => {
           </>
         ) : (
           <>
-            <Link className="navbar__link" to="/editar-producto">
-              <BiUpload size={24} />
-            </Link>
+            {user.userData && user.userData.role === "admin" ? (
+              <Link className="navbar__link" to="/product-manager">
+                <BiUpload size={24} />
+              </Link>
+            ) : null}
             <Link className="navbar__link" to="/carrito">
               Carrito ({user.userData && user.userData.cart.length})
             </Link>

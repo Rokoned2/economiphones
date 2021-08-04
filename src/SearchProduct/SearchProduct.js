@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "../shared/Card";
 import Search from "./Search";
 import PriceFilter from "./PriceFilter";
-import BrandFilter from "./BrandFilter";
+import CheckBox from "./CheckBox";
 import { brandList, priceList } from "./Data";
 import api from "../api";
 
@@ -29,8 +29,6 @@ const SearchProduct = () => {
   const getProducts = (variables) => {
     api.post("/product/getProducts").then((response) => {
       if (response.data.success) {
-        console.log("response", response);
-
         if (variables.loadMore) {
           setProducts([...Products, ...response.data.products]);
         } else {
@@ -101,7 +99,7 @@ const SearchProduct = () => {
       <div className="filters">
         <Search />
 
-        <BrandFilter
+        <CheckBox
           list={brandList}
           handleFilters={(filters) => handleFilters(filters, "brands")}
         />

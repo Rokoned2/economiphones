@@ -9,12 +9,14 @@ const Auth = (ComposedClass, reload, adminRoute = null) => {
 
     useEffect(() => {
       dispatch(auth()).then((response) => {
+        console.log("response", response);
         if (!response.payload.isAuth) {
           if (reload) {
             props.history.push("/login");
           }
         } else {
-          if (adminRoute && !response.payload.isAdmin) {
+          console.log("yesp", adminRoute);
+          if (adminRoute && response.payload.role !== "admin") {
             props.history.push("/");
           } else {
             if (reload === false) {

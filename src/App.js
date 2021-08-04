@@ -12,8 +12,11 @@ import DetailProduct from "./DetailProduct/DetailProduct";
 import UploadProduct from "./UploadProduct/UploadProduct";
 import Cart from "./Cart/Cart";
 import Signin from "./Signin/Signin";
+import SigninAdmin from "./SigninAdmin/SigninAdmin";
+
 import Signup from "./Signup/Signup";
 import EditProduct from "./EditProduct/EditProduct";
+import ProductManager from "./ProductManager/ProductManager";
 
 function App() {
   return (
@@ -22,6 +25,11 @@ function App() {
         <Navbar />
         <Switch>
           <Route path="/ingresar" exact component={Auth(Signin, false)} />
+          <Route
+            path="/ingresar-admin"
+            exact
+            component={Auth(SigninAdmin, false)}
+          />
           <Route path="/registrar" exact component={Auth(Signup, false)} />
           <Route path="/" exact component={Auth(SearchProduct, null)} />
           <Route
@@ -31,11 +39,20 @@ function App() {
           />
           <Route path="/carrito" exact component={Auth(Cart, true)} />
           <Route
-            path="/editar-producto"
+            path="/product-manager"
             exact
-            component={Auth(EditProduct, true)}
+            component={Auth(ProductManager, true, true)}
           />
-          <Route path="/subir" exact component={Auth(UploadProduct, true)} />
+          <Route
+            path="/product-manager/:id"
+            exact
+            component={Auth(EditProduct, true, true)}
+          />
+          <Route
+            path="/subir"
+            exact
+            component={Auth(UploadProduct, true, true)}
+          />
         </Switch>
         <Footer />
       </Router>

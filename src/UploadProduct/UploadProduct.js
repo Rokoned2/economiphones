@@ -26,15 +26,13 @@ const UploadProduct = (props) => {
     }
 
     const variables = {
-      // writer: user.uid,
+      writer: props.user.userData._id,
       title,
       description,
       price,
       brand,
       images,
     };
-
-    console.log("variables ", variables);
 
     api.post("/product/uploadProduct", variables).then((response) => {
       if (response.data.success) {

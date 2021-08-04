@@ -1,10 +1,17 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Dropzone from "react-dropzone";
 import { FaUpload } from "react-icons/fa";
 import api from "../api";
 
-const FileUpload = ({ refreshFunction }) => {
+const FileUpload = ({ refreshFunction, initialImages }) => {
   const [images, setImages] = useState([]);
+  console.log("images", images);
+
+  useEffect(() => {
+    if (initialImages !== undefined) {
+      setImages(initialImages);
+    }
+  }, [initialImages]);
 
   const onDrop = useCallback(
     (files) => {

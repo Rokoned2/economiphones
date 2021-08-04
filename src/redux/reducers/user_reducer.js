@@ -1,5 +1,6 @@
 import {
   LOGIN_USER,
+  LOGIN_ADMIN,
   REGISTER_USER,
   AUTH_USER,
   LOGOUT_USER,
@@ -13,6 +14,7 @@ const userReducer = (state = {}, action) => {
   switch (action.type) {
     case REGISTER_USER:
       return { ...state, register: action.payload };
+    case LOGIN_ADMIN:
     case LOGIN_USER:
       return { ...state, loginSucces: action.payload };
     case AUTH_USER:

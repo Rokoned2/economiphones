@@ -1,88 +1,132 @@
-import React, { useState, useEffect } from "react";
-import { HiPencil } from "react-icons/hi";
-import { MdDelete } from "react-icons/md";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import FileUpload from "../UploadProduct/FileUpload";
 import api from "../api";
 
-const EditProduct = ({ products }) => {
-  const [Products, setProducts] = useState([]);
+const Brands = [
+  { key: 1, value: "Samsumg" },
+  { key: 2, value: "Huawei" },
+];
 
-  const getProducts = () => {
-    api.post("/product/getProducts").then((response) => {
-      if (response.data.success) {
-        // if (variables.loadMore) {
-        //   setProducts([...Products, ...response.data.products]);
-        // } else {
-        setProducts(response.data.products);
-        // }
-        // setPostSize(response.data.postSize);
-      } else {
-        alert("Failed to fectch product datas");
-      }
-    });
-  };
+const EditProduct = (props) => {
+  const productId = props.match.params.id;
+  const [images, setImages] = useState([]);
+  const [Product, setProduct] = useState([]);
 
-  const deleteProduct = (id) => {
-    api.delete(`/product/deleteProduct/${id}`).then((response) => {
-      if (response.data.success) {
-        // if (variables.loadMore) {
-        //   setProducts([...Products, ...response.data.products]);
-        // } else {
-        alert("Product deleted");
-        // }
-        // setPostSize(response.data.postSize);
-      } else {
-        alert("Failed to delete product ");
-      }
-    });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+  setValue("title", Product.title, {
+    shouldDirty: true,
+  });
+  setValue("description", Product.description, {
+    shouldDirty: true,
+  });
+  setValue("price", Product.price, {
+    shouldDirty: true,
+  });
+  setValue("brand", Product.brand, {
+    shouldDirty: true,
+  });
+
+  // setImages(Product.images)
+
+  const submitProduct = (data) => {
+    const { title, description, price, brand } = data;
+
+    if (!title || !description || !price || !brand) {
+      return alert("fill all the fields first!");
+    }
+
+    const variables = {
+      writer: props.user.userData._id,
+      title,
+      description,
+      price,
+      brand,
+      images,
+    };
+
+    api
+      .patch(`/product/updateProduct/${productId}`, variables)
+      .then((response) => {
+        if (response.data.success) {
+          alert("Product Successfully Uploaded");
+          props.history.push("/");
+        } else {
+          alert("Failed to upload Product");
+        }
+      });
   };
 
   useEffect(() => {
-    //     const variables = {
-    //       skip: Skip,
-    //       limit: Limit,
-    //     };
-    //     getProducts(variables);
-    getProducts();
-  }, []);
+    api
+      .get(`/product/products_by_id?id=${productId}&type=single`)
+      .then((response) => {
+        setProduct(response.data[0]);
+        setImages(response.data[0].images);
+      });
+  }, [productId]);
 
-  const ProductItem = ({ _id, name, price, image = "" }) => {
-    return (
-      <div key={_id} style={{ display: "flex" }}>
-        <div>
-          <img
-            src={`http://localhost:5000/${image}
-            `}
-            alt="product-img"
-            style={{ width: "6rem", height: "6rem" }}
-          />
-          <div>
-            <h3>{name}</h3>
-            <b>Price: S/. {price}</b>
-          </div>
-        </div>
-
-        <HiPencil style={{ width: "4rem", height: "4rem" }} />
-        <MdDelete
-          onClick={() => deleteProduct(_id)}
-          style={{ width: "4rem", height: "4rem" }}
-        />
-      </div>
-    );
+  const updateImages = (newImages) => {
+    setImages(newImages);
   };
 
   return (
-    <div>
-      <h1>Productos</h1>
+    <div className="upload-product">
+      <h1 className="u-center-text">Upload Product</h1>
       <div>
-        {Products.map(({ _id, name, price, images }) => (
-          <ProductItem _id={_id} name={name} price={price} image={images[0]} />
-        ))}
+        <FileUpload refreshFunction={updateImages} initialImages={images} />
       </div>
 
-      <Link to="/subir">
-        <button className="btn u-center-element-x">Agregar producto</button>
-      </Link>
+      <form className="form" onSubmit={handleSubmit(submitProduct)}>
+        <div className="form__group">
+          <label className="form__label">Título</label>
+          <input
+            className="form__input"
+            {...register("title", { required: true })}
+            type="text"
+          />
+        </div>
+
+        <div className="form__group">
+          <label className="form__label">Descripción</label>
+          <input
+            className="form__input"
+            {...register("description", { required: true })}
+            type="text"
+          />
+        </div>
+
+        <div className="form__group">
+          <label className="form__label">Precio</label>
+          <input
+            className="form__input"
+            {...register("price", { required: true })}
+            type="number"
+          />
+        </div>
+
+        <div className="form__group">
+          <label className="form__label">Marca</label>
+          <select {...register("brand", { required: true })}>
+            {Brands.map((brand) => (
+              <option key={brand.key} value={brand.key}>
+                {brand.value}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button className="btn" type="submit">
+          Subir
+        </button>
+      </form>
     </div>
   );
 };
